@@ -143,7 +143,7 @@ bool cart_load(char *cart) {
 
     printf("Cartridge loaded...\n");
     printf("\tTitle: %s\n", ctx.header->title);
-    printf("\tType: %2.2X\n", ctx.header->cartridge_type, cart_type_name());
+    printf("\tType: %2.2X %s\n", ctx.header->cartridge_type, cart_type_name());
     printf("\tROM Size: %dKB\n", 32 << ctx.header->rom_size);
     printf("\tRAM Size: %2.2X\n", ctx.header->ram_size);
     printf("\tLIC Code: %2.2X %s\n", ctx.header->old_lic_code, get_lic_name());

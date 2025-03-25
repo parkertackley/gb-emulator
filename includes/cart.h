@@ -18,4 +18,4 @@ typedef struct {
     uint16_t global_checksum;
 } rom_header;
 
-bool load_cart(char *cart);
+bool cart_load(char *cart);

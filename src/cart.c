@@ -142,18 +142,18 @@ bool cart_load(char *cart) {
     ctx.header->title[15] = 0;
 
     printf("Cartridge loaded...\n");
-    printf("\tTitle: %s\n", ctx.header->title);
-    printf("\tType: %2.2X %s\n", ctx.header->cartridge_type, cart_type_name());
-    printf("\tROM Size: %dKB\n", 32 << ctx.header->rom_size);
-    printf("\tRAM Size: %2.2X\n", ctx.header->ram_size);
-    printf("\tLIC Code: %2.2X %s\n", ctx.header->old_lic_code, get_lic_name());
-    printf("\tROM Version: %2.2X\n", ctx.header->version_number);
+    printf("\tTitle     : %s\n", ctx.header->title);
+    printf("\tType      : %2.2X (%s)\n", ctx.header->cartridge_type, cart_type_name());
+    printf("\tROM Size  : %dKB\n", 32 << ctx.header->rom_size);
+    printf("\tRAM Size  : %2.2X\n", ctx.header->ram_size);
+    printf("\tLIC Code  : %2.2X (%s)\n", ctx.header->old_lic_code, get_lic_name());
+    printf("\tROM Vers  : %2.2X\n", ctx.header->version_number);
 
     uint8_t checksum = 0;
     for(uint16_t address = 0x0134; address <= 0x014C; address++) {
         checksum = checksum - ctx.rom_data[address] - 1;
     }
-    printf("\tChecksum: %2.2X (%s)\n", ctx.header->header_checksum, (checksum & 0xFF) ? "PASSED" : "FAILED");
+    printf("\tChecksum  : %2.2X (%s)\n", ctx.header->header_checksum, (checksum & 0xFF) ? "PASSED" : "FAILED");
 
     return true;
 

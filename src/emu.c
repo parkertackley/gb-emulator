@@ -28,7 +28,7 @@ int emu_run(int argc, char **argv) {
         return -1;
     }
 
-    printf("Running...\n");
+    printf("Cartridge Loaded...\n");
     SDL_Init(SDL_INIT_VIDEO);
     printf("SDL_Init\n");
     TTF_Init();

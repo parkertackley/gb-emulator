@@ -2,6 +2,7 @@
 
 #include "common.h"
 
+// Cartridge header
 typedef struct {
     uint8_t entrypoint[4];
     uint8_t logo[0x30];

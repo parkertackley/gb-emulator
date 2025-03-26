@@ -2,6 +2,7 @@
 
 #include "common.h"
 
+// Emulator machine
 typedef struct {
     bool paused;
     bool running;

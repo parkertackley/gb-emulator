@@ -1,5 +1,6 @@
 #include "../includes/cart.h"
 
+// Cartridge object
 typedef struct {
     char filename[1024];
     uint32_t rom_size;
@@ -7,6 +8,7 @@ typedef struct {
     rom_header *header;
 } cart_content;
 
+// Init the cartridge content object
 static cart_content ctx;
 
 static const char *ROM_TYPE[] = {
@@ -119,28 +121,32 @@ const char *cart_type_name() {
 }
 
 bool cart_load(char *cart) {
+    // Load name of the cart into the Cartridge content (ctx) filename
     snprintf(ctx.filename, sizeof(ctx.filename), "%s", cart);
 
+    // Open the cartridge file, return if cartridge could not be opened
     FILE *fp = fopen(cart, "r");
-
     if(!fp) {
         printf("Could not open cartridge: %s\n", cart);
         return false;
     }
-
     printf("%s opened!\n", ctx.filename);
 
+    // Get size of ROM/cart by going to the end of the ROM
     fseek(fp, 0, SEEK_END);
     ctx.rom_size = ftell(fp);
     rewind(fp);
 
+    // Allocate the size of ROM and read data into the cartridge object, close the file
     ctx.rom_data = malloc(ctx.rom_size);
     fread(ctx.rom_data, ctx.rom_size, 1, fp);
     fclose(fp);
 
+    // Go to start of the header
     ctx.header = (rom_header *)(ctx.rom_data + 0x100);
     ctx.header->title[15] = 0;
 
+    // Printing details of the cartridge
     printf("Cartridge loaded...\n");
     printf("\tTitle     : %s\n", ctx.header->title);
     printf("\tType      : %2.2X (%s)\n", ctx.header->cartridge_type, cart_type_name());
@@ -149,6 +155,7 @@ bool cart_load(char *cart) {
     printf("\tLIC Code  : %2.2X (%s)\n", ctx.header->old_lic_code, get_lic_name());
     printf("\tROM Vers  : %2.2X\n", ctx.header->version_number);
 
+    // Verifying the checksum (from Pan Docs, part 16)
     uint8_t checksum = 0;
     for(uint16_t address = 0x0134; address <= 0x014C; address++) {
         checksum = checksum - ctx.rom_data[address] - 1;

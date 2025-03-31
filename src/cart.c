@@ -165,3 +165,12 @@ bool cart_load(char *cart) {
     return true;
 
 }
+
+uint8_t bus_read(uint16_t address) {
+    return ctx.rom_data[address];
+}
+
+void bus_write(uint16_t, uint8_t value) {
+    printf("No implementation!\n");
+    exit(-5);
+}

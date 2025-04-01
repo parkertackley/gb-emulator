@@ -15,6 +15,6 @@ void bus_write(uint16_t address, uint8_t value) {
         cart_write(address, value);
     }
 
-    printf("No implementation!\n");
+    fprintf(stderr, "No implementation!\n");
     exit(-5);
 }

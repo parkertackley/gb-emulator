@@ -2,6 +2,7 @@
 
 #include "common.h"
 
+// CPU registers -> https://gbdev.io/pandocs/CPU_Registers_and_Flags.html
 typedef struct {
     uint8_t a;
     uint8_t f;
@@ -15,6 +16,7 @@ typedef struct {
     uint16_t sp;
 } cpu_registers;
 
+// CPU struct
 typedef struct {
     cpu_registers regs;
     uint16_t fetch_data;

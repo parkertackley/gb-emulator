@@ -1,4 +1,5 @@
 #include "../includes/bus.h"
+#include "../includes/cart.h"
 
 uint8_t bus_read(uint16_t address) {
     if(address < 0x8000) {

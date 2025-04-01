@@ -1,6 +1,7 @@
 #pragma once
 
 #include "common.h"
+#include "instructions.h"
 
 // CPU registers -> https://gbdev.io/pandocs/CPU_Registers_and_Flags.html
 typedef struct {
@@ -19,9 +20,12 @@ typedef struct {
 // CPU struct
 typedef struct {
     cpu_registers regs;
-    uint16_t fetch_data;
+    
+    uint16_t fetched_data;
     uint16_t mem_dest;
+    bool dest_is_mem;
     uint8_t cur_opcode;
+    instruction *cur_inst;
 
     bool halted;
     bool stepping;

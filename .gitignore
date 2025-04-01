@@ -2,4 +2,4 @@
 gb-emulator
 
 #directories
-/roms
+# /roms -> only includes non copyright ROMS (not illegal or something like that)

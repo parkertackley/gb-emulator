@@ -1,3 +1,5 @@
+#pragma once
+
 #include "common.h"
 
 // Addressing mode -> https://gbdev.io/gb-opcodes/optables/

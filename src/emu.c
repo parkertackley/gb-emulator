@@ -62,6 +62,7 @@ int emu_run(int argc, char **argv) {
     return 0;
 }
 
+// Emulate a cpu cycle
 void emu_cycles(int cpu_cycles) {
     // TODO: ...
 }

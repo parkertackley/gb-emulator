@@ -14,6 +14,7 @@ static void proc_ld(cpu_context *ctx) {
     // TODO:
 }
 
+// Determine if flags are set
 static bool check_cond(cpu_context *ctx) {
     bool z = CPU_FLAG_Z;
     bool c = CPU_FLAG_C;
@@ -30,6 +31,8 @@ static bool check_cond(cpu_context *ctx) {
 
 }
 
+// Set PC to fetched data (register to jump to)
+//      -> emulate cycle
 static void proc_jp(cpu_context *ctx) {
     if(check_cond(ctx)) {
         ctx->regs.pc = ctx->fetched_data;
@@ -37,6 +40,7 @@ static void proc_jp(cpu_context *ctx) {
     }
 }
 
+// Point to function based on type
 static IN_PROC processors[] = {
     [IN_NONE] = proc_none, // IN_NONE
     [IN_NOP] = proc_noop,

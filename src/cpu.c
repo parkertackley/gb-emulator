@@ -4,33 +4,41 @@
 
 cpu_context ctx = {0};
 
+// Set program counter to 0x100 (0x0000-0x00FF reserved for boot ROM)
 void cpu_init() {
     ctx.regs.pc = 0x100;
 }
 
+// Fetch current opcode from PC, increment PC,
+//    decode instruction from the corresponding to the fetched opcode 
 static void fetch_instruction() {
     ctx.cur_opcode = bus_read(ctx.regs.pc++);
     ctx.cur_inst = instruction_by_opcode(ctx.cur_opcode);
 
 }
 
+// Fetches operand for the current instruction based on addressing mode
 static void fetch_data() {
     ctx.mem_dest = 0;
     ctx.dest_is_mem = false;
 
     switch(ctx.cur_inst->mode) {
+        // Implicit: no operands needed
         case AM_IMP:    return;
 
+        // Single register operation
         case AM_R:
             ctx.fetched_data = cpu_read_reg(ctx.cur_inst->reg_1);
             return;
         
+        // Register + 8-bit immediate: Load 8-bit immediate (D8) into register (R)
         case AM_R_D8:
             ctx.fetched_data = bus_read(ctx.regs.pc);
             emu_cycles(1);
             ctx.regs.pc++;
             return;
         
+        // 16-bit immediate: take raw 16-bit (D16) ex. JP D16
         case AM_D16: {
             uint16_t lo = bus_read(ctx.regs.pc);
             emu_cycles(1);
@@ -51,6 +59,7 @@ static void fetch_data() {
     }
 }
 
+// Executes instruction (durr)
 static void execute() {
     IN_PROC proc = inst_get_processor(ctx.cur_inst->type);
 
@@ -59,6 +68,9 @@ static void execute() {
         exit(-5);
     }
 
+    // Execute logic for function pointed to by proc
+    //      ex.
+    //          for JP instruction, proc(&ctx) == proc_jp(&ctx)
     proc(&ctx);
 
 }

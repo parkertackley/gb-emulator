@@ -12,10 +12,6 @@ static void fetch_instruction() {
     ctx.cur_opcode = bus_read(ctx.regs.pc++);
     ctx.cur_inst = instruction_by_opcode(ctx.cur_opcode);
 
-    if(ctx.cur_inst == NULL) {
-        printf("Unknown instruction! %02X\n", ctx.cur_opcode);
-        exit(-7);
-    }
 }
 
 static void fetch_data() {
@@ -56,7 +52,15 @@ static void fetch_data() {
 }
 
 static void execute() {
-    printf("Not executing yet!\n");
+    IN_PROC proc = inst_get_processor(ctx.cur_inst->type);
+
+    if(!proc) {
+        fprintf(stderr, "No implementation!\n");
+        exit(-5);
+    }
+
+    proc(&ctx);
+
 }
 
 bool cpu_step() {
@@ -68,6 +72,11 @@ bool cpu_step() {
 
         printf("Executing instruction: %02X     PC: %04X\n", ctx.cur_opcode, pc);
         
+        if(ctx.cur_inst == NULL) {
+            printf("Unknown instruction! %02X\n", ctx.cur_opcode);
+            exit(-7);
+        }
+
         execute();
     }
     return true;

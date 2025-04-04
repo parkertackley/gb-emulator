@@ -29,6 +29,9 @@ typedef struct {
 
     bool halted;
     bool stepping;
+
+    bool int_master_enabled;
+
 } cpu_context;
 
 void cpu_init();

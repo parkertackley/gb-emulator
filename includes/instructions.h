@@ -74,19 +74,18 @@ typedef enum {
     IN_XOR,
     IN_OR,
     IN_CP,
-    IN_RET,
-    IN_JP,
     IN_POP,
-    IN_CALL,
+    IN_JP,
     IN_PUSH,
-    IN_RST,
+    IN_RET,
     IN_CB,
+    IN_CALL,
     IN_RETI,
-    IN_PREFIX,
     IN_LDH,
     IN_JPHL,
     IN_DI,
     IN_EI,
+    IN_RST,
     IN_ERR,
     // Prefixed ($CB $xx)
     IN_RLC,
@@ -105,10 +104,10 @@ typedef enum {
 // A condition code -> https://rgbds.gbdev.io/docs/v0.9.1/gbz80.7
 typedef enum {
     CT_NONE,
-    CT_Z,
     CT_NZ,
+    CT_Z,
+    CT_NC,
     CT_C,
-    CT_NC
 } cond_type;
 
 // Intruction instance

@@ -3,3 +3,4 @@ gb-emulator
 
 #directories
 # /roms -> only includes non copyright ROMS (not illegal or something like that)
+/fun-roms

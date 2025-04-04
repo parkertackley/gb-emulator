@@ -1,4 +1,3 @@
-# Game Boy
 ```
    ___   _   __  __ ___   ___  _____   __  ___ __  __ _   _ _      _ _____ ___  ___ 
   / __| /_\ |  \/  | __| | _ )/ _ \ \ / / | __|  \/  | | | | |    /_\_   _/ _ \| _ \
@@ -21,13 +20,13 @@ A simple passion project to get a better understanding of hardware emulation and
 
 ### Executing program
 
-* Run make to create the executable
+* Run make in the top directory to create the executable
 ```
 make
 ```
 * Run with desired ROM
 ```
-./gb-emulator <rom-file-name>
+./gb-emulator <path/to/rom-file-name>
 ```
 <!-- 
 ## Help

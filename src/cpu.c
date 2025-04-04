@@ -4,9 +4,10 @@
 
 cpu_context ctx = {0};
 
-// Set program counter to 0x100 (0x0000-0x00FF reserved for boot ROM)
+// Set program counter to 0x100 (256) (0x0000-0x00FF reserved for boot ROM)
 void cpu_init() {
     ctx.regs.pc = 0x100;
+    ctx.regs.a = 0x01;
 }
 
 // Fetch current opcode from PC, increment PC,
@@ -21,6 +22,10 @@ static void fetch_instruction() {
 static void fetch_data() {
     ctx.mem_dest = 0;
     ctx.dest_is_mem = false;
+
+    if(ctx.cur_inst == NULL) {
+        return;
+    }
 
     switch(ctx.cur_inst->mode) {
         // Implicit: no operands needed
@@ -53,7 +58,7 @@ static void fetch_data() {
             return;
         }
         default:
-            printf("Unknown addressing mode! %d\n", ctx.cur_inst->mode);
+            printf("(fetch_data) Unknown addressing mode! %d (%02X)\n", ctx.cur_inst->mode, ctx.cur_opcode);
             exit(-7);
             return;
     }
@@ -64,7 +69,7 @@ static void execute() {
     IN_PROC proc = inst_get_processor(ctx.cur_inst->type);
 
     if(!proc) {
-        fprintf(stderr, "No implementation!\n");
+        fprintf(stderr, "(execute) No implementation!\n");
         exit(-5);
     }
 
@@ -82,10 +87,15 @@ bool cpu_step() {
         fetch_instruction();
         fetch_data();
 
-        printf("Executing instruction: %02X     PC: %04X\n", ctx.cur_opcode, pc);
+        printf("%04X: %-7s (%02X %02X %02X) A: %02X B: %02X C: %02X\n", 
+            pc, inst_name(ctx.cur_inst->type), ctx.cur_opcode,
+            bus_read(pc + 1), bus_read(pc + 2),
+            ctx.regs.a, ctx.regs.b, ctx.regs.c);
+
+        // printf("Executing instruction: %02X     PC: %04X\n", ctx.cur_opcode, pc);
         
         if(ctx.cur_inst == NULL) {
-            printf("Unknown instruction! %02X\n", ctx.cur_opcode);
+            printf("(cpu_step) Unknown instruction! %02X\n", ctx.cur_opcode);
             exit(-7);
         }
 

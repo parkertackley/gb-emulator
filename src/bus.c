@@ -6,7 +6,7 @@ uint8_t bus_read(uint16_t address) {
         return cart_read(address);
     }
 
-    printf("No implentaion!\n");
+    printf("(bus_read) No implementation!\n");
     exit(-5);
 
 }
@@ -16,6 +16,6 @@ void bus_write(uint16_t address, uint8_t value) {
         cart_write(address, value);
     }
 
-    fprintf(stderr, "No implementation!\n");
+    fprintf(stderr, "(bus_write) No implementation!\n");
     exit(-5);
 }

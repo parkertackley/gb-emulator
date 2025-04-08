@@ -170,7 +170,7 @@ uint8_t cart_read(uint16_t address) {
     return ctx.rom_data[address];
 }
 
-void cart_write(uint16_t, uint8_t value) {
+void cart_write(uint16_t address, uint8_t value) {
     fprintf(stderr, "No implementation!\n");
     exit(-5);
 }

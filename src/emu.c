@@ -1,8 +1,14 @@
 #include "../includes/cart.h"
 #include "../includes/cpu.h"
 #include "../includes/emu.h"
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+
+// MacOS
+#include <SDL.h>
+#include <SDL_ttf.h>
+
+// Linux
+// #include <SDL2/SDL.h>
+// #include <SDL2/SDL_ttf.h>
 
 /*
     Emulator components:
